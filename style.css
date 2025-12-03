@@ -490,11 +490,14 @@ body::before {
    FOOTER
    ======================================== */
 .glass-footer {
-    padding: 16px 0 0 0;
+    padding: 16px 32px;
     margin-top: auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     gap: 24px;
     justify-content: center;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .footer-link {
