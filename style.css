@@ -326,6 +326,106 @@ body::before {
     z-index: 10;
 }
 
+/* INPUT GLASS BAR */
+.input-glass-bar {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.input-glass-bar:focus-within {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+}
+
+.search-icon {
+    color: var(--text-tertiary);
+    padding-left: 12px;
+}
+
+.smart-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: var(--font-system);
+    outline: none;
+    padding: 12px 0;
+}
+
+.smart-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.mic-button-smart {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.mic-button-smart:hover {
+    background: rgba(255, 255, 255, 0.2);
+    animation: micPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.mic-button-smart.recording {
+    background: var(--accent-system);
+}
+
+.mic-active-ring {
+    position: absolute;
+    inset: -6px;
+    border: 2px solid var(--accent-system);
+    border-radius: 14px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.mic-button-smart.recording .mic-active-ring {
+    opacity: 1;
+    animation: ringPulse 1.5s infinite;
+}
+
+@keyframes ringPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
 /* ACTIVE CHAT MODE STYLES */
 body.chat-active .content-wrapper {
     justify-content: flex-start;

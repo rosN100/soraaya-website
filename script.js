@@ -4,6 +4,7 @@
 let isRecording = false;
 let recognition = null;
 let conversationHistory = [];
+let isChatActive = false;
 
 // ========================================
 // DOM ELEMENTS
@@ -11,7 +12,7 @@ let conversationHistory = [];
 const questionInput = document.getElementById('questionInput');
 const micButton = document.getElementById('micButton');
 const chatHistory = document.getElementById('chatHistory');
-const inputSection = document.querySelector('.smart-input-container');
+const newInquiryBtn = document.getElementById('newInquiryBtn');
 
 // ========================================
 // UI HELPERS
@@ -73,19 +74,8 @@ function logConversation(question, answer) {
 }
 
 // ========================================
-// DOM ELEMENTS
+// STATE MANAGEMENT FUNCTIONS
 // ========================================
-const questionInput = document.getElementById('questionInput');
-const micButton = document.getElementById('micButton');
-const chatHistory = document.getElementById('chatHistory');
-const inputSection = document.querySelector('.smart-input-container');
-const newInquiryBtn = document.getElementById('newInquiryBtn');
-
-// ========================================
-// STATE MANAGEMENT
-// ========================================
-let isChatActive = false;
-
 function activateChatMode() {
     if (!isChatActive) {
         document.body.classList.add('chat-active');
