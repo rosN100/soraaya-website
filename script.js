@@ -4,53 +4,83 @@
 let isRecording = false;
 let recognition = null;
 let conversationHistory = [];
-let isChatActive = false;
 
 // ========================================
 // DOM ELEMENTS
 // ========================================
 const questionInput = document.getElementById('questionInput');
 const micButton = document.getElementById('micButton');
-const chatHistory = document.getElementById('chatHistory');
-const newInquiryBtn = document.getElementById('newInquiryBtn');
+const responseSection = document.getElementById('responseSection');
+const responseText = document.getElementById('responseText');
+const loadingSection = document.getElementById('loadingSection');
+const askAnotherButton = document.getElementById('askAnother');
+const inputSection = document.querySelector('.smart-input-container');
+const heroSection = document.querySelector('.hero-section');
 
 // ========================================
-// UI HELPERS
+// AI CHAT FUNCTION
 // ========================================
-function appendMessage(role, content) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${role === 'user' ? 'user-message' : 'ai-message'}`;
+async function sendMessageToAI(userMessage) {
+    // Add user message to history
+    conversationHistory.push({
+        role: 'user',
+        content: userMessage
+    });
 
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'message-content';
-    contentDiv.textContent = content;
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                messages: conversationHistory
+            }),
+        });
 
-    messageDiv.appendChild(contentDiv);
-    chatHistory.appendChild(messageDiv);
+        if (!response.ok) {
+            throw new Error('Failed to get response');
+        }
 
-    // Scroll to bottom
-    chatHistory.scrollTop = chatHistory.scrollHeight;
+        // Handle streaming response
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let aiResponse = '';
 
-    return contentDiv; // Return content div for streaming updates
-}
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-function showTypingIndicator() {
-    const indicator = document.createElement('div');
-    indicator.className = 'typing-indicator';
-    indicator.id = 'typingIndicator';
-    indicator.innerHTML = `
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-    `;
-    chatHistory.appendChild(indicator);
-    chatHistory.scrollTop = chatHistory.scrollHeight;
-}
+            const chunk = decoder.decode(value);
+            // Vercel AI SDK sends chunks like: 0:"text"
+            const lines = chunk.split('\n');
 
-function removeTypingIndicator() {
-    const indicator = document.getElementById('typingIndicator');
-    if (indicator) {
-        indicator.remove();
+            for (const line of lines) {
+                if (line.startsWith('0:')) {
+                    try {
+                        const content = JSON.parse(line.substring(2));
+                        aiResponse += content;
+                        responseText.textContent = aiResponse;
+                    } catch (e) {
+                        console.error('Error parsing chunk:', e);
+                    }
+                }
+            }
+        }
+
+        // Add AI response to history
+        conversationHistory.push({
+            role: 'assistant',
+            content: aiResponse
+        });
+
+        // Log conversation for analytics
+        logConversation(userMessage, aiResponse);
+
+        return aiResponse;
+    } catch (error) {
+        console.error('Error:', error);
+        return "I'm having trouble connecting right now. Please try again or book a demo to speak with our team directly.";
     }
 }
 
@@ -71,30 +101,6 @@ function logConversation(question, answer) {
     sessionStorage.setItem('conversationLogs', JSON.stringify(logs));
 
     console.log('Conversation logged:', log);
-}
-
-// ========================================
-// STATE MANAGEMENT FUNCTIONS
-// ========================================
-function activateChatMode() {
-    if (!isChatActive) {
-        document.body.classList.add('chat-active');
-        isChatActive = true;
-
-        // Add welcome message if history is empty
-        if (chatHistory.children.length === 0) {
-            appendMessage('assistant', "Hi there! I'm Soraaya AI. How can I help you today?");
-        }
-    }
-}
-
-function resetToHero() {
-    document.body.classList.remove('chat-active');
-    isChatActive = false;
-    chatHistory.innerHTML = ''; // Clear chat history
-    conversationHistory = []; // Clear API history
-    questionInput.value = '';
-    questionInput.focus();
 }
 
 // ========================================
@@ -152,86 +158,39 @@ async function handleQuestion() {
         return;
     }
 
-    // Activate chat mode on first question
-    activateChatMode();
+    // Hide input and hero sections
+    inputSection.style.display = 'none';
+    heroSection.style.display = 'none';
 
-    // Clear input immediately
-    questionInput.value = '';
+    // Show loading
+    loadingSection.classList.add('visible');
 
-    // Add user message
-    appendMessage('user', question);
+    // Get AI response with streaming
+    responseText.textContent = ''; // Clear previous response
+    responseSection.classList.add('visible');
 
-    // Show typing indicator
-    showTypingIndicator();
+    const result = await sendMessageToAI(question);
 
-    // Add user message to history for API
-    conversationHistory.push({
-        role: 'user',
-        content: question
-    });
-
-    try {
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                messages: conversationHistory
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to get response');
-        }
-
-        // Remove typing indicator
-        removeTypingIndicator();
-
-        // Create AI message container
-        const aiContentDiv = appendMessage('assistant', '');
-
-        // Handle streaming response
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let aiResponse = '';
-
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            const chunk = decoder.decode(value);
-            // Vercel AI SDK sends chunks like: 0:"text"
-            const lines = chunk.split('\n');
-
-            for (const line of lines) {
-                if (line.startsWith('0:')) {
-                    try {
-                        const content = JSON.parse(line.substring(2));
-                        aiResponse += content;
-                        aiContentDiv.textContent = aiResponse;
-                        chatHistory.scrollTop = chatHistory.scrollHeight;
-                    } catch (e) {
-                        console.error('Error parsing chunk:', e);
-                    }
-                }
-            }
-        }
-
-        // Add AI response to history
-        conversationHistory.push({
-            role: 'assistant',
-            content: aiResponse
-        });
-
-        // Log conversation for analytics
-        logConversation(question, aiResponse);
-
-    } catch (error) {
-        console.error('Error:', error);
-        removeTypingIndicator();
-        appendMessage('assistant', "I'm having trouble connecting right now. Please try again or book a demo to speak with our team directly.");
+    // If the result is the error message (not streamed), display it
+    if (result && responseText.textContent === '') {
+        responseText.textContent = result;
     }
+
+    // Hide loading
+    loadingSection.classList.remove('visible');
+
+    // Clear input
+    questionInput.value = '';
+}
+
+// ========================================
+// RESET TO INITIAL STATE
+// ========================================
+function resetToInput() {
+    responseSection.classList.remove('visible');
+    inputSection.style.display = 'block';
+    heroSection.style.display = 'block';
+    questionInput.focus();
 }
 
 // ========================================
@@ -266,11 +225,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // New Inquiry button
-    if (newInquiryBtn) {
-        newInquiryBtn.addEventListener('click', resetToHero);
-    }
+    // Ask another question button
+    askAnotherButton.addEventListener('click', resetToInput);
 
     // Focus input on load
     questionInput.focus();
+});
+
+// ========================================
+// ACCESSIBILITY ENHANCEMENTS
+// ========================================
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && responseSection.classList.contains('visible')) {
+        resetToInput();
+    }
 });

@@ -25,13 +25,6 @@
                 <div class="brand-section">
                     <div class="brand-icon">S</div>
                     <span class="brand-name">Soraaya AI</span>
-                    <button class="new-inquiry-btn" id="newInquiryBtn">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 5v14M5 12h14" />
-                        </svg>
-                        New Inquiry
-                    </button>
                 </div>
                 <div class="status-pill">
                     <span class="status-dot"></span>
@@ -50,62 +43,59 @@
 
             <!-- Main Content -->
             <div class="glass-content">
-                <!-- Main Content Area -->
-                <div class="content-wrapper">
+                <div class="hero-section">
+                    <h1 class="hero-title">Customer Experience<br>Reimagined</h1>
+                    <p class="hero-subtitle">
+                        We empower businesses with AI employees that feel human.
+                    </p>
+                    <p class="hero-subtitle">
+                        <span class="highlight">Just ask what you wanna know.</span>
+                    </p>
+                </div>
 
-                    <!-- HERO STATE (Initial View) -->
-                    <div class="hero-state" id="heroState">
-                        <div class="hero-section">
-                            <h1 class="hero-title">Customer Experience<br>Reimagined</h1>
-                            <p class="hero-subtitle">
-                                We empower businesses with AI employees that feel human.
-                            </p>
-                            <p class="hero-subtitle">
-                                <span class="highlight">Just ask what you wanna know.</span>
-                            </p>
+                <!-- Smart Input Area -->
+                <div class="smart-input-container">
+                    <div class="input-glass-bar">
+                        <div class="search-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
                         </div>
+                        <input type="text" id="questionInput" class="smart-input" placeholder="Ask Soraaya..."
+                            autocomplete="off">
+                        <button class="mic-button-smart" id="micButton" aria-label="Voice input">
+                            <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="23"></line>
+                                <line x1="8" y1="23" x2="16" y2="23"></line>
+                            </svg>
+                            <div class="mic-active-ring"></div>
+                        </button>
                     </div>
+                </div>
 
-                    <!-- CHAT STATE (Active Conversation) -->
-                    <div class="chat-state" id="chatState">
-                        <div class="chat-history" id="chatHistory">
-                            <!-- Messages will be added here -->
+                <!-- Response Area -->
+                <div class="smart-response-area" id="responseSection">
+                    <div class="response-glass-panel">
+                        <div class="response-header">
+                            <span class="response-label">SORAAYA AI</span>
                         </div>
+                        <p class="response-text" id="responseText"></p>
+                        <button class="smart-action-btn" id="askAnother">
+                            New Inquiry
+                        </button>
                     </div>
+                </div>
 
-                    <!-- INPUT AREA (Shared but moves) -->
-                    <div class="input-wrapper" id="inputWrapper">
-                        <div class="input-glass-bar">
-                            <div class="search-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                </svg>
-                            </div>
-                            <input type="text" id="questionInput" class="smart-input" placeholder="Ask Soraaya..."
-                                autocomplete="off">
-                            <button class="mic-button-smart" id="micButton" aria-label="Voice input">
-                                <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                                </svg>
-                                <div class="mic-active-ring"></div>
-                            </button>
-                        </div>
-                    </div>
-
+                <!-- Loading -->
+                <div class="smart-loader" id="loadingSection">
+                    <div class="loader-ring"></div>
                 </div>
             </div>
-        </div>
-
-        <!-- Loading -->
-        <div class="smart-loader" id="loadingSection">
-            <div class="loader-ring"></div>
-        </div>
         </div>
 
         <!-- Founder Links Footer -->
