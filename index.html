@@ -43,78 +43,69 @@
 
             <!-- Main Content -->
             <div class="glass-content">
-                <div class="hero-section">
-                    <h1 class="hero-title">Customer Experience<br>Reimagined</h1>
-                    <p class="hero-subtitle">
-                        We empower businesses with AI employees that feel human.
-                    </p>
-                    <p class="hero-subtitle">
-                        <span class="highlight">Just ask what you wanna know.</span>
-                    </p>
-                </div>
-
-                <!-- Smart Input Area -->
-                <div class="smart-input-container">
-                    <div class="input-glass-bar">
-                        <div class="search-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
+                <!-- Chat Interface -->
+                <div class="chat-interface">
+                    <!-- Chat History (Scrollable) -->
+                    <div class="chat-history" id="chatHistory">
+                        <!-- Welcome Message -->
+                        <div class="message ai-message">
+                            <div class="message-content">
+                                Hi there! I'm Soraaya AI. How can I help you today?
+                            </div>
                         </div>
-                        <input type="text" id="questionInput" class="smart-input" placeholder="Ask Soraaya..."
-                            autocomplete="off">
-                        <button class="mic-button-smart" id="micButton" aria-label="Voice input">
-                            <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                <line x1="12" y1="19" x2="12" y2="23"></line>
-                                <line x1="8" y1="23" x2="16" y2="23"></line>
-                            </svg>
-                            <div class="mic-active-ring"></div>
-                        </button>
+                    </div>
+
+                    <!-- Input Area (Fixed at bottom) -->
+                    <div class="input-area">
+                        <div class="smart-input-container">
+                            <input type="text" class="smart-input" placeholder="Ask Soraaya..." id="questionInput">
+                            <button class="mic-button-smart" id="micButton">
+                                <svg class="mic-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 2.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                                    <path
+                                        d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                                </svg>
+                                <div class="mic-active-ring"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="smart-response-area" id="responseSection">
+                        <div class="response-glass-panel">
+                            <div class="response-header">
+                                <span class="response-label">Soraaya AI</span>
+                            </div>
+                            <p class="response-text" id="responseText"></p>
+                            <button class="smart-action-btn" id="askAnother">
+                                New Inquiry
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Loading -->
+                    <div class="smart-loader" id="loadingSection">
+                        <div class="loader-ring"></div>
                     </div>
                 </div>
 
-                <!-- Response Area -->
-                <div class="smart-response-area" id="responseSection">
-                    <div class="response-glass-panel">
-                        <div class="response-header">
-                            <span class="response-label">Soraaya AI</span>
-                        </div>
-                        <p class="response-text" id="responseText"></p>
-                        <button class="smart-action-btn" id="askAnother">
-                            New Inquiry
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Loading -->
-                <div class="smart-loader" id="loadingSection">
-                    <div class="loader-ring"></div>
+                <!-- Founder Links Footer -->
+                <div class="glass-footer">
+                    <a href="https://www.linkedin.com/in/roshan--kumar/" target="_blank" class="footer-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                        <span>Roshan</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/naman-trivedi2000/" target="_blank" class="footer-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                        <span>Naman</span>
+                    </a>
                 </div>
             </div>
-
-            <!-- Founder Links Footer -->
-            <div class="glass-footer">
-                <a href="https://www.linkedin.com/in/roshan--kumar/" target="_blank" class="footer-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                    <span>Roshan</span>
-                </a>
-                <a href="https://www.linkedin.com/in/naman-trivedi2000/" target="_blank" class="footer-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                    <span>Naman</span>
-                </a>
-            </div>
-        </div>
     </main>
 
     <script src="script.js"></script>
