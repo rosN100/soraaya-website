@@ -1,0 +1,16 @@
+{
+  "name": "soraaya-website",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev --listen 3000",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "ai": "^3.0.0",
+    "openai": "^4.20.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  }
+}

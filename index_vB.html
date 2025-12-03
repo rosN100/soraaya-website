@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soraaya - Version B</title>
+    <meta name="description" content="Soraaya - Smart AI Solutions for Real Estate">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=SF+Pro+Display:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-image"></div>
+
+    <main class="container">
+        <!-- Smart Glass Card -->
+        <div class="smart-glass-card" id="mainCard">
+            <!-- Header Bar -->
+            <div class="glass-header">
+                <div class="brand-section">
+                    <div class="brand-icon">S</div>
+                    <span class="brand-name">Soraaya</span>
+                </div>
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    <span>System Active</span>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="glass-content">
+                <div class="hero-section">
+                    <h1 class="hero-title">Customer Experience<br>Reimagined</h1>
+                    <p class="hero-subtitle">
+                        We empower real estate companies with AI employees that feel human.
+                        <span class="highlight">Just ask what you wanna know.</span>
+                    </p>
+                </div>
+
+                <!-- Smart Input Area -->
+                <div class="smart-input-container">
+                    <div class="input-glass-bar">
+                        <div class="search-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <input type="text" id="questionInput" class="smart-input" placeholder="Ask Soraaya..."
+                            autocomplete="off">
+                        <button class="mic-button-smart" id="micButton" aria-label="Voice input">
+                            <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="23"></line>
+                                <line x1="8" y1="23" x2="16" y2="23"></line>
+                            </svg>
+                            <div class="mic-active-ring"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Response Area -->
+                <div class="smart-response-area" id="responseSection">
+                    <div class="response-glass-panel">
+                        <div class="response-header">
+                            <span class="response-label">Soraaya AI</span>
+                        </div>
+                        <p class="response-text" id="responseText"></p>
+                        <button class="smart-action-btn" id="askAnother">
+                            New Inquiry
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div class="smart-loader" id="loadingSection">
+                    <div class="loader-ring"></div>
+                </div>
+            </div>
+
+            <!-- Glass Footer -->
+            <div class="glass-footer">
+                <div class="footer-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </div>
+                <div class="footer-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>Info</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

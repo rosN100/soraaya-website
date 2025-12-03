@@ -1,0 +1,227 @@
+// ========================================
+// STATE MANAGEMENT
+// ========================================
+let isRecording = false;
+let recognition = null;
+let conversationHistory = [];
+
+// ========================================
+// DOM ELEMENTS
+// ========================================
+const questionInput = document.getElementById('questionInput');
+const micButton = document.getElementById('micButton');
+const responseSection = document.getElementById('responseSection');
+const responseText = document.getElementById('responseText');
+const loadingSection = document.getElementById('loadingSection');
+const askAnotherButton = document.getElementById('askAnother');
+const inputSection = document.querySelector('.smart-input-container');
+const heroSection = document.querySelector('.hero-section');
+
+// ========================================
+// AI CHAT FUNCTION
+// ========================================
+async function sendMessageToAI(userMessage) {
+    // Add user message to history
+    conversationHistory.push({
+        role: 'user',
+        content: userMessage
+    });
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                messages: conversationHistory
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to get response');
+        }
+
+        // Handle streaming response
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let aiResponse = '';
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value);
+            aiResponse += chunk;
+
+            // Update UI with streaming text
+            responseText.textContent = aiResponse;
+        }
+
+        // Add AI response to history
+        conversationHistory.push({
+            role: 'assistant',
+            content: aiResponse
+        });
+
+        // Log conversation for analytics
+        logConversation(userMessage, aiResponse);
+
+        return aiResponse;
+    } catch (error) {
+        console.error('Error:', error);
+        return "I'm having trouble connecting right now. Please try again or book a demo to speak with our team directly.";
+    }
+}
+
+// ========================================
+// ANALYTICS LOGGING
+// ========================================
+function logConversation(question, answer) {
+    const log = {
+        timestamp: new Date().toISOString(),
+        question: question,
+        answer: answer,
+        conversationLength: conversationHistory.length
+    };
+
+    // Store in sessionStorage
+    const logs = JSON.parse(sessionStorage.getItem('conversationLogs') || '[]');
+    logs.push(log);
+    sessionStorage.setItem('conversationLogs', JSON.stringify(logs));
+
+    console.log('Conversation logged:', log);
+}
+
+// ========================================
+// SPEECH RECOGNITION SETUP
+// ========================================
+function initializeSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        console.warn('Speech recognition not supported in this browser');
+        return null;
+    }
+
+    const recognitionInstance = new SpeechRecognition();
+    recognitionInstance.continuous = false;
+    recognitionInstance.interimResults = false;
+    recognitionInstance.lang = 'en-US';
+
+    recognitionInstance.onstart = () => {
+        isRecording = true;
+        micButton.classList.add('recording');
+    };
+
+    recognitionInstance.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        questionInput.value = transcript;
+        setTimeout(() => handleQuestion(), 300);
+    };
+
+    recognitionInstance.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        isRecording = false;
+        micButton.classList.remove('recording');
+
+        if (event.error === 'not-allowed') {
+            alert('Microphone access was denied. Please enable microphone permissions to use voice input.');
+        }
+    };
+
+    recognitionInstance.onend = () => {
+        isRecording = false;
+        micButton.classList.remove('recording');
+    };
+
+    return recognitionInstance;
+}
+
+// ========================================
+// QUESTION HANDLING
+// ========================================
+async function handleQuestion() {
+    const question = questionInput.value.trim();
+
+    if (!question) {
+        return;
+    }
+
+    // Hide input and hero sections
+    inputSection.style.display = 'none';
+    heroSection.style.display = 'none';
+
+    // Show loading
+    loadingSection.classList.add('visible');
+
+    // Get AI response with streaming
+    responseText.textContent = ''; // Clear previous response
+    responseSection.classList.add('visible');
+
+    await sendMessageToAI(question);
+
+    // Hide loading
+    loadingSection.classList.remove('visible');
+
+    // Clear input
+    questionInput.value = '';
+}
+
+// ========================================
+// RESET TO INITIAL STATE
+// ========================================
+function resetToInput() {
+    responseSection.classList.remove('visible');
+    inputSection.style.display = 'block';
+    heroSection.style.display = 'block';
+    questionInput.focus();
+}
+
+// ========================================
+// EVENT LISTENERS
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize speech recognition
+    recognition = initializeSpeechRecognition();
+
+    // Microphone button click
+    micButton.addEventListener('click', () => {
+        if (!recognition) {
+            alert('Speech recognition is not supported in your browser. Please use Chrome or Edge for the best experience.');
+            return;
+        }
+
+        if (isRecording) {
+            recognition.stop();
+        } else {
+            try {
+                recognition.start();
+            } catch (error) {
+                console.error('Error starting recognition:', error);
+            }
+        }
+    });
+
+    // Text input - Enter key
+    questionInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleQuestion();
+        }
+    });
+
+    // Ask another question button
+    askAnotherButton.addEventListener('click', resetToInput);
+
+    // Focus input on load
+    questionInput.focus();
+});
+
+// ========================================
+// ACCESSIBILITY ENHANCEMENTS
+// ========================================
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && responseSection.classList.contains('visible')) {
+        resetToInput();
+    }
+});

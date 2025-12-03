@@ -1,0 +1,480 @@
+/* ========================================
+   DESIGN SYSTEM - VERSION B (SMART GLASS)
+   ======================================== */
+:root {
+    /* Palette - Vision OS Style */
+    --glass-base: rgba(20, 20, 20, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-highlight: rgba(255, 255, 255, 0.08);
+
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.75);
+    --text-tertiary: rgba(255, 255, 255, 0.45);
+
+    --accent-system: #0a84ff;
+    /* System Blue */
+    --accent-success: #30d158;
+
+    /* Typography */
+    --font-system: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Effects */
+    --blur-heavy: 50px;
+    --radius-lg: 32px;
+    --radius-md: 20px;
+    --radius-sm: 12px;
+
+    --shadow-floating: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font-system);
+    background: #000;
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Spotlight gradient behind card */
+body::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(10, 132, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ========================================
+   BACKGROUND
+   ======================================== */
+.background-image {
+    position: fixed;
+    inset: 0;
+    background-image: url('background_luxury.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transform: scale(1.05);
+}
+
+/* ========================================
+   MAIN CONTAINER
+   ======================================== */
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   SMART GLASS CARD
+   ======================================== */
+.smart-glass-card {
+    width: 100%;
+    max-width: 800px;
+    /* Wider, dashboard style */
+    background: var(--glass-base);
+    backdrop-filter: blur(var(--blur-heavy)) saturate(110%);
+    -webkit-backdrop-filter: blur(var(--blur-heavy)) saturate(110%);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-floating);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: scaleIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.glass-header {
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #fff, #aaa);
+    border-radius: 8px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.brand-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.status-pill {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-success);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(48, 209, 88, 0.4);
+}
+
+/* Demo Button */
+.demo-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-system);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.demo-button:hover {
+    background: #0051D5;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.demo-button svg {
+    flex-shrink: 0;
+}
+
+/* ========================================
+   CONTENT
+   ======================================== */
+.glass-content {
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.hero-section {
+    text-align: left;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 500px;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
+.highlight {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ========================================
+   SMART INPUT
+   ======================================== */
+.smart-input-container {
+    width: 100%;
+}
+
+.input-glass-bar {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.input-glass-bar:focus-within {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+}
+
+.search-icon {
+    color: var(--text-tertiary);
+    padding-left: 12px;
+}
+
+.smart-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: var(--font-system);
+    outline: none;
+    padding: 12px 0;
+}
+
+.smart-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.mic-button-smart {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.mic-button-smart:hover {
+    background: rgba(255, 255, 255, 0.2);
+    animation: micPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.mic-button-smart.recording {
+    background: var(--accent-system);
+}
+
+.mic-active-ring {
+    position: absolute;
+    inset: -6px;
+    border: 2px solid var(--accent-system);
+    border-radius: 14px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.mic-button-smart.recording .mic-active-ring {
+    opacity: 1;
+    animation: ringPulse 1.5s infinite;
+}
+
+@keyframes ringPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   RESPONSE AREA
+   ======================================== */
+.smart-response-area {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.smart-response-area.visible {
+    display: block;
+}
+
+.response-glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.response-header {
+    margin-bottom: 12px;
+}
+
+.response-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+}
+
+.response-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.smart-action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.smart-action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   LOADER
+   ======================================== */
+.smart-loader {
+    display: none;
+    justify-content: center;
+    padding: 20px;
+}
+
+.smart-loader.visible {
+    display: flex;
+}
+
+.loader-ring {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--text-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.glass-footer {
+    padding: 16px 32px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 24px;
+}
+
+.footer-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.footer-link:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 600px) {
+    .smart-glass-card {
+        height: 100%;
+        border-radius: 0;
+        border: none;
+    }
+
+    .glass-content {
+        padding: 24px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+}
