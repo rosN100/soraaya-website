@@ -235,26 +235,80 @@ body::before {
 }
 
 /* ========================================
-   CHAT INTERFACE
+   LAYOUT & STATES
    ======================================== */
-.chat-interface {
+.content-wrapper {
     width: 100%;
     height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    position: relative;
+    justify-content: center;
+    /* Center vertically for Hero */
+    align-items: center;
+    padding: 20px;
+    transition: all 0.5s ease;
+}
+
+/* HERO STATE */
+.hero-state {
+    text-align: center;
+    transition: all 0.4s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 500px;
+    font-weight: 300;
+    margin-bottom: 6px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.highlight {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* CHAT STATE */
+.chat-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    /* Hidden initially */
+    flex-direction: column;
+    padding-bottom: 90px;
+    /* Space for input */
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .chat-history {
     flex: 1;
     overflow-y: auto;
-    padding: 20px 30px;
+    padding: 20px 40px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     scroll-behavior: smooth;
-    /* Hide scrollbar but allow scrolling */
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -263,6 +317,73 @@ body::before {
     display: none;
 }
 
+/* INPUT WRAPPER */
+.input-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 40px;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 10;
+}
+
+/* ACTIVE CHAT MODE STYLES */
+body.chat-active .content-wrapper {
+    justify-content: flex-start;
+    /* Move to top */
+    padding-top: 0;
+}
+
+body.chat-active .hero-state {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+
+body.chat-active .chat-state {
+    display: flex;
+    opacity: 1;
+}
+
+body.chat-active .input-wrapper {
+    position: absolute;
+    bottom: 30px;
+    margin-top: 0;
+    width: calc(100% - 60px);
+    /* Full width minus padding */
+    max-width: 800px;
+}
+
+/* NEW INQUIRY BUTTON */
+.new-inquiry-btn {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: all 0.2s;
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.new-inquiry-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+body.chat-active .new-inquiry-btn {
+    display: flex;
+    opacity: 1;
+    transform: translateX(0);
+    animation: fadeIn 0.4s 0.3s forwards;
+}
+
+/* MESSAGES */
 .message {
     max-width: 80%;
     animation: messageFadeIn 0.4s ease-out forwards;
@@ -275,10 +396,8 @@ body::before {
     border-radius: 18px;
     font-size: 1rem;
     line-height: 1.5;
-    position: relative;
 }
 
-/* AI Message */
 .ai-message {
     align-self: flex-start;
 }
@@ -290,7 +409,6 @@ body::before {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* User Message */
 .user-message {
     align-self: flex-end;
 }
@@ -309,15 +427,7 @@ body::before {
     }
 }
 
-/* Input Area */
-.input-area {
-    padding: 20px 30px;
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-}
-
-/* Typing Indicator */
+/* TYPING INDICATOR */
 .typing-indicator {
     display: flex;
     gap: 4px;

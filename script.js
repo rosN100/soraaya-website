@@ -73,6 +73,41 @@ function logConversation(question, answer) {
 }
 
 // ========================================
+// DOM ELEMENTS
+// ========================================
+const questionInput = document.getElementById('questionInput');
+const micButton = document.getElementById('micButton');
+const chatHistory = document.getElementById('chatHistory');
+const inputSection = document.querySelector('.smart-input-container');
+const newInquiryBtn = document.getElementById('newInquiryBtn');
+
+// ========================================
+// STATE MANAGEMENT
+// ========================================
+let isChatActive = false;
+
+function activateChatMode() {
+    if (!isChatActive) {
+        document.body.classList.add('chat-active');
+        isChatActive = true;
+
+        // Add welcome message if history is empty
+        if (chatHistory.children.length === 0) {
+            appendMessage('assistant', "Hi there! I'm Soraaya AI. How can I help you today?");
+        }
+    }
+}
+
+function resetToHero() {
+    document.body.classList.remove('chat-active');
+    isChatActive = false;
+    chatHistory.innerHTML = ''; // Clear chat history
+    conversationHistory = []; // Clear API history
+    questionInput.value = '';
+    questionInput.focus();
+}
+
+// ========================================
 // SPEECH RECOGNITION SETUP
 // ========================================
 function initializeSpeechRecognition() {
@@ -126,6 +161,9 @@ async function handleQuestion() {
     if (!question) {
         return;
     }
+
+    // Activate chat mode on first question
+    activateChatMode();
 
     // Clear input immediately
     questionInput.value = '';
@@ -238,8 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // New Inquiry button
+    if (newInquiryBtn) {
+        newInquiryBtn.addEventListener('click', resetToHero);
+    }
+
     // Focus input on load
     questionInput.focus();
 });
-
-
