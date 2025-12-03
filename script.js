@@ -52,10 +52,22 @@ async function sendMessageToAI(userMessage) {
             if (done) break;
 
             const chunk = decoder.decode(value);
-            aiResponse += chunk;
+            // Vercel AI SDK sends chunks like: 0:"text"
+            // We need to extract the text content
+            const lines = chunk.split('\n');
 
-            // Update UI with streaming text
-            responseText.textContent = aiResponse;
+            for (const line of lines) {
+                if (line.startsWith('0:')) {
+                    // Extract text content from 0:"content"
+                    try {
+                        const content = JSON.parse(line.substring(2));
+                        aiResponse += content;
+                        responseText.textContent = aiResponse;
+                    } catch (e) {
+                        console.error('Error parsing chunk:', e);
+                    }
+                }
+            }
         }
 
         // Add AI response to history
@@ -159,7 +171,12 @@ async function handleQuestion() {
     responseText.textContent = ''; // Clear previous response
     responseSection.classList.add('visible');
 
-    await sendMessageToAI(question);
+    const result = await sendMessageToAI(question);
+
+    // If the result is the error message (not streamed), display it
+    if (result && responseText.textContent === '') {
+        responseText.textContent = result;
+    }
 
     // Hide loading
     loadingSection.classList.remove('visible');
