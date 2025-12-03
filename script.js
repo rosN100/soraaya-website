@@ -240,3 +240,32 @@ document.addEventListener('keydown', (e) => {
         resetToInput();
     }
 });
+
+// ========================================
+// CARD ANIMATION - 3D TILT EFFECT
+// ========================================
+const card = document.querySelector('.smart-glass-card');
+const container = document.querySelector('.container');
+
+if (card && container) {
+    container.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const cardCenterY = rect.top + rect.height / 2;
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        // Calculate rotation based on mouse position relative to card center
+        const rotateX = ((mouseY - cardCenterY) / rect.height) * -10; // Max 10deg
+        const rotateY = ((mouseX - cardCenterX) / rect.width) * 10;   // Max 10deg
+
+        // Apply transform
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        // Reset card position when mouse leaves
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+    });
+}
