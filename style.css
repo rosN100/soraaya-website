@@ -524,90 +524,117 @@ body::before {
    ======================================== */
 @media (max-width: 768px) {
 
-    /* Disable card animation on mobile */
-    .smart-glass-card {
-        height: 100vh;
-        max-height: 100vh;
-        min-height: 100vh;
-        border-radius: 0;
-        border: none;
-        margin: 0;
-        transform: none !important;
-        transition: none !important;
+    /* Prevent any scrolling or overflow on mobile */
+    body {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
     }
 
     /* Adjust container for mobile */
     .container {
-        padding: 0;
+        padding: 20px;
+        height: 100vh;
+        overflow: hidden;
     }
 
-    /* Adjust content padding */
+    /* Disable card animation and fix sizing on mobile */
+    .smart-glass-card {
+        height: auto;
+        max-height: calc(100vh - 40px);
+        min-height: auto;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--glass-border);
+        margin: 0;
+        transform: none !important;
+        transition: none !important;
+        touch-action: none;
+        pointer-events: auto;
+    }
+
+    /* Adjust content padding and scrolling */
     .glass-content {
         padding: 20px 16px;
-        gap: 24px;
+        gap: 20px;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
     }
 
     /* Adjust header for mobile */
     .glass-header {
-        padding: 16px 20px;
-        flex-wrap: wrap;
-        gap: 12px;
+        padding: 12px 16px;
+        flex-wrap: nowrap;
+        gap: 8px;
     }
 
     .brand-section {
         gap: 8px;
+        flex-shrink: 0;
     }
 
     .brand-icon {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
     }
 
     .brand-name {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .status-pill {
-        font-size: 0.7rem;
-        padding: 4px 10px;
+        font-size: 0.65rem;
+        padding: 4px 8px;
+        display: none;
+        /* Hide on very small screens */
     }
 
     .demo-button {
-        font-size: 0.8rem;
-        padding: 6px 12px;
+        font-size: 0.75rem;
+        padding: 6px 10px;
     }
 
     /* Hero section adjustments */
     .hero-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         line-height: 1.2;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .hero-subtitle {
-        font-size: 0.95rem;
-        line-height: 1.5;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 4px;
     }
 
     /* Input adjustments */
+    .smart-input-container {
+        margin-top: 20px;
+    }
+
     .input-glass-bar {
         padding: 6px;
         gap: 8px;
     }
 
     .smart-input {
-        font-size: 0.95rem;
-        padding: 10px 0;
+        font-size: 0.9rem;
+        padding: 8px 0;
     }
 
     .search-icon {
-        padding-left: 8px;
+        padding-left: 6px;
+    }
+
+    .search-icon svg {
+        width: 18px;
+        height: 18px;
     }
 
     .mic-button-smart {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
     }
 
     /* Response area adjustments */
@@ -616,23 +643,29 @@ body::before {
     }
 
     .response-text {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         line-height: 1.5;
+    }
+
+    .smart-action-btn {
+        font-size: 0.85rem;
+        padding: 8px 14px;
     }
 
     /* Footer adjustments */
     .glass-footer {
-        padding: 12px 20px;
-        gap: 16px;
+        padding: 10px 16px;
+        gap: 12px;
+        flex-shrink: 0;
     }
 
     .footer-link {
-        font-size: 0.8rem;
-        padding: 6px 10px;
+        font-size: 0.75rem;
+        padding: 6px 8px;
     }
 
     .footer-link svg {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
     }
 }
