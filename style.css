@@ -338,7 +338,7 @@ body::before {
     width: 32px;
     height: 32px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     border: none;
     color: var(--text-primary);
     display: flex;
@@ -347,10 +347,16 @@ body::before {
     cursor: pointer;
     transition: all 0.2s;
     position: relative;
+    flex-shrink: 0;
+}
+
+.mic-button-smart svg {
+    width: 18px;
+    height: 18px;
 }
 
 .mic-button-smart:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     animation: micPulse 1.5s ease-in-out infinite;
 }
 
@@ -614,7 +620,7 @@ body::before {
 
     /* Input adjustments */
     .smart-input-container {
-        margin-top: 16px;
+        margin-top: 8px;
     }
 
     .input-glass-bar {
