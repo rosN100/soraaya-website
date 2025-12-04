@@ -261,7 +261,10 @@ document.addEventListener('keydown', (e) => {
 const card = document.querySelector('.smart-glass-card');
 const container = document.querySelector('.container');
 
-if (card && container) {
+// Only enable card animation on desktop (not on mobile/tablet)
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+if (card && container && !isMobile) {
     container.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const cardCenterX = rect.left + rect.width / 2;
@@ -283,3 +286,4 @@ if (card && container) {
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
     });
 }
+```
