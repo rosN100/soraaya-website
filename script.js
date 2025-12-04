@@ -212,8 +212,22 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             try {
                 recognition.start();
+                console.log('Speech recognition started');
             } catch (error) {
                 console.error('Error starting recognition:', error);
+                // If already running, stop and restart
+                if (error.message && error.message.includes('already started')) {
+                    recognition.stop();
+                    setTimeout(() => {
+                        try {
+                            recognition.start();
+                        } catch (e) {
+                            console.error('Failed to restart recognition:', e);
+                        }
+                    }, 100);
+                } else {
+                    alert('Could not start voice input. Please check your microphone permissions.');
+                }
             }
         }
     });
