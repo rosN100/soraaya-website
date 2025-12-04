@@ -620,7 +620,7 @@ body::before {
 
     /* Input adjustments */
     .smart-input-container {
-        margin-top: 8px;
+        margin-top: 4px;
     }
 
     .input-glass-bar {
