@@ -111,8 +111,11 @@ function initializeSpeechRecognition() {
 
     if (!SpeechRecognition) {
         console.warn('Speech recognition not supported in this browser');
+        console.log('Browser:', navigator.userAgent);
         return null;
     }
+
+    console.log('Speech recognition is supported');
 
     const recognitionInstance = new SpeechRecognition();
     recognitionInstance.continuous = false;
@@ -120,27 +123,40 @@ function initializeSpeechRecognition() {
     recognitionInstance.lang = 'en-US';
 
     recognitionInstance.onstart = () => {
+        console.log('Speech recognition started');
         isRecording = true;
         micButton.classList.add('recording');
     };
 
     recognitionInstance.onresult = (event) => {
+        console.log('Speech recognition result received');
         const transcript = event.results[0][0].transcript;
+        console.log('Transcript:', transcript);
         questionInput.value = transcript;
         setTimeout(() => handleQuestion(), 300);
     };
 
     recognitionInstance.onerror = (event) => {
         console.error('Speech recognition error:', event.error);
+        console.error('Error details:', event);
         isRecording = false;
         micButton.classList.remove('recording');
 
-        if (event.error === 'not-allowed') {
-            alert('Microphone access was denied. Please enable microphone permissions to use voice input.');
+        if (event.error === 'not-allowed' || event.error === 'permission-denied') {
+            alert('Microphone access was denied. Please enable microphone permissions in your browser settings and system preferences.');
+        } else if (event.error === 'no-speech') {
+            console.log('No speech detected');
+        } else if (event.error === 'aborted') {
+            console.log('Speech recognition aborted');
+        } else if (event.error === 'network') {
+            alert('Network error occurred. Please check your internet connection.');
+        } else {
+            alert(`Speech recognition error: ${event.error}. Please try again.`);
         }
     };
 
     recognitionInstance.onend = () => {
+        console.log('Speech recognition ended');
         isRecording = false;
         micButton.classList.remove('recording');
     };
