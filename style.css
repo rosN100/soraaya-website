@@ -549,23 +549,21 @@ body::before {
         margin: 0;
         transform: none !important;
         transition: none !important;
-        touch-action: none;
-        pointer-events: auto;
     }
 
     /* Adjust content padding and scrolling */
     .glass-content {
-        padding: 20px 16px;
-        gap: 20px;
+        padding: 24px 20px;
+        gap: 28px;
         max-height: calc(100vh - 180px);
         overflow-y: auto;
     }
 
     /* Adjust header for mobile */
     .glass-header {
-        padding: 12px 16px;
+        padding: 14px 18px;
         flex-wrap: nowrap;
-        gap: 8px;
+        gap: 10px;
     }
 
     .brand-section {
@@ -574,57 +572,61 @@ body::before {
     }
 
     .brand-icon {
-        width: 24px;
-        height: 24px;
-        font-size: 14px;
+        width: 26px;
+        height: 26px;
+        font-size: 15px;
     }
 
     .brand-name {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .status-pill {
         font-size: 0.65rem;
         padding: 4px 8px;
         display: none;
-        /* Hide on very small screens */
+        /* Hide on mobile to save space */
     }
 
     .demo-button {
         font-size: 0.75rem;
-        padding: 6px 10px;
+        padding: 7px 12px;
     }
 
     /* Hero section adjustments */
+    .hero-section {
+        margin-bottom: 8px;
+    }
+
     .hero-title {
-        font-size: 1.5rem;
-        line-height: 1.2;
-        margin-bottom: 10px;
+        font-size: 1.6rem;
+        line-height: 1.25;
+        margin-bottom: 14px;
     }
 
     .hero-subtitle {
-        font-size: 0.9rem;
-        line-height: 1.4;
-        margin-bottom: 4px;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin-bottom: 8px;
     }
 
     /* Input adjustments */
     .smart-input-container {
-        margin-top: 20px;
+        margin-top: 24px;
     }
 
     .input-glass-bar {
-        padding: 6px;
-        gap: 8px;
+        padding: 8px;
+        gap: 10px;
     }
 
     .smart-input {
-        font-size: 0.9rem;
-        padding: 8px 0;
+        font-size: 0.92rem;
+        padding: 10px 0;
     }
 
     .search-icon {
-        padding-left: 6px;
+        padding-left: 8px;
     }
 
     .search-icon svg {
@@ -633,39 +635,55 @@ body::before {
     }
 
     .mic-button-smart {
-        width: 32px;
-        height: 32px;
+        width: 38px;
+        height: 38px;
+        background: rgba(255, 255, 255, 0.15);
+        flex-shrink: 0;
+    }
+
+    .mic-button-smart svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mic-button-smart:hover {
+        background: rgba(255, 255, 255, 0.25);
     }
 
     /* Response area adjustments */
     .response-glass-panel {
-        padding: 16px;
+        padding: 18px;
+    }
+
+    .response-label {
+        margin-bottom: 10px;
     }
 
     .response-text {
-        font-size: 0.9rem;
-        line-height: 1.5;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin-bottom: 16px;
     }
 
     .smart-action-btn {
-        font-size: 0.85rem;
-        padding: 8px 14px;
+        font-size: 0.88rem;
+        padding: 10px 16px;
     }
 
     /* Footer adjustments */
     .glass-footer {
-        padding: 10px 16px;
-        gap: 12px;
+        padding: 12px 18px;
+        gap: 14px;
         flex-shrink: 0;
     }
 
     .footer-link {
-        font-size: 0.75rem;
-        padding: 6px 8px;
+        font-size: 0.78rem;
+        padding: 7px 10px;
     }
 
     .footer-link svg {
-        width: 12px;
-        height: 12px;
+        width: 13px;
+        height: 13px;
     }
 }

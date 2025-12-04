@@ -285,13 +285,4 @@ if (card && container && !isMobile) {
         // Reset card position when mouse leaves
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
     });
-} else if (card && isMobile) {
-    // Prevent any touch-based movement on mobile
-    card.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-    }, { passive: false });
-
-    card.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-    }, { passive: false });
 }
