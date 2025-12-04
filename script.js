@@ -278,7 +278,7 @@ if (card && container && !isMobile) {
         const rotateY = ((mouseX - cardCenterX) / rect.width) * 10;   // Max 10deg
 
         // Apply transform
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
     });
 
     container.addEventListener('mouseleave', () => {
@@ -286,4 +286,3 @@ if (card && container && !isMobile) {
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
     });
 }
-```
