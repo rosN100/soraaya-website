@@ -89,7 +89,7 @@ body::before {
    ======================================== */
 .smart-glass-card {
     width: 100%;
-    max-width: 800px;
+    max-width: 720px;
     min-height: 500px;
     max-height: 90vh;
     background: var(--glass-base);
@@ -97,7 +97,7 @@ body::before {
     -webkit-backdrop-filter: blur(var(--blur-heavy)) saturate(110%);
     border-radius: var(--radius-lg);
     border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-floating);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), var(--shadow-floating);
     display: flex;
     flex-direction: column;
     overflow: hidden;
